@@ -32,22 +32,22 @@ The task will run after `deploy:set_current_revision` by default
 
 ```ruby
 # For generating the minified_url that is passed to honeybadger on upload
-set :honeybadger_sourcemaps_minified_url_base, "http://www.example.com"
+set :honeybadger_sourcemaps_minified_url_base, 'http://www.example.com'
 
 # Directory that will be searched for source maps to upload
-set :honeybadger_sourcemaps_target_dir, "./cache/my_app"
+set :honeybadger_sourcemaps_target_dir, './cache/my_app'
+
+# Role under which sourcemaps should be uploaded
+set :honeybadger_sourcemaps_role, :sourcemaps
 ```
 
 ### Optional
 ```ruby
-# honeybadger post_server_item token. Defaults to the honeybadger_token used by the honeybadger gem
-set :honeybadger_sourcemaps_token, -> { fetch :honeybadger_token }
+# honeybadger api key. Defaults to the honeybadger_api_key used by the honeybadger gem
+set :honeybadger_sourcemaps_api_key, -> { fetch :honeybadger_api_key }
 
 # Version of the sourcemaps for honeybadger. Uses the current_revision by default
 set :honeybadger_sourcemaps_version, -> { fetch :current_revision }
-
-# Role under which sourcemaps should be uploaded
-set :honeybadger_sourcemaps_role, -> { fetch :honeybadger_role }
 
 # Glob pattern used to search for sourcemaps in the target_dir
 set :honeybadger_sourcemaps_glob_pattern, File.join('**', '*.js.map')
