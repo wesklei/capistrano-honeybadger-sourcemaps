@@ -36,9 +36,6 @@ set :honeybadger_sourcemaps_minified_url_base, 'http://www.example.com'
 
 # Directory that will be searched for source maps to upload
 set :honeybadger_sourcemaps_target_dir, './cache/my_app'
-
-# Role under which sourcemaps should be uploaded
-set :honeybadger_sourcemaps_role, :sourcemaps
 ```
 
 ### Optional
@@ -54,4 +51,7 @@ set :honeybadger_sourcemaps_glob_pattern, File.join('**', '*.js.map')
 
 # Gsub pattern used to convert a sourcemap file to the associated JS file
 set :honeybadger_sourcemaps_gsub_pattern, /\.map\Z/
+
+# Role under which sourcemaps should be uploaded
+set :honeybadger_sourcemaps_role, :sourcemaps
 ```

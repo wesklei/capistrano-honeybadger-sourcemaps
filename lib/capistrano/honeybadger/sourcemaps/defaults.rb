@@ -5,7 +5,7 @@ set :honeybadger_sourcemaps_minified_url_base, -> { abort 'Please specify the mi
 set :honeybadger_sourcemaps_target_dir, -> { abort 'Please specify the directory from which your javascript sourcemaps will be uploaded'}
 
 # Role under which sourcemaps should be uploaded
-set :honeybadger_sourcemaps_role, -> { abort 'Please specify the role from which your javascript sourcemaps will be uploaded' }
+set :honeybadger_sourcemaps_role, -> { :sourcemaps }
 
 # honeybadger token. Defaults to the honeybadger_api_key used by the honeybadger gem
 set :honeybadger_sourcemaps_api_key, -> { fetch :honeybadger_api_key }
