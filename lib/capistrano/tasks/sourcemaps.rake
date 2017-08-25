@@ -8,8 +8,8 @@ namespace :honeybadger do
       uri = URI.parse('https://api.honeybadger.io/v1/source_maps')
       req = Net::HTTP::Post::Multipart.new uri.path,
         'api_key' => fetch(:honeybadger_sourcemaps_api_key),
-        'minified_url' => minified_url_for(s_map),
-        'minified_file' => UploadIO.new(File.new(s_map), "application/octet-stream")
+        'minified_url' => minified_url_for(js_filename(s_map)),
+        'minified_file' => UploadIO.new(File.new(js_filename(s_map)), "application/octet-stream")
         'source_map' => UploadIO.new(File.new(s_map), "application/octet-stream")
         'revision' => fetch(:rollbar_sourcemaps_version),
 
@@ -25,12 +25,16 @@ namespace :honeybadger do
       end
     end
 
-    def minified_url_for(s_map)
+    def js_filename(s_map)
       gsub_pattern = fetch(:rollbar_sourcemaps_gsub_pattern)
+      s_map.gsub(gsub_pattern, ''))
+    end
+
+    def minified_url_for(s_map)
       url_base = fetch(:rollbar_sourcemaps_minified_url_base).dup
       url_base = url_base.prepend('http://') unless url_base.index(/https?:\/\//)
 
-      url = File.join(url_base, s_map.gsub(gsub_pattern, ''))
+      url = File.join(url_base, js_filename(s_map))
       debug "Minified url for #{s_map}: #{url}"
       url
     end
