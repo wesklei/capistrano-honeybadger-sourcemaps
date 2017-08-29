@@ -9,9 +9,9 @@ namespace :honeybadger do
       req = Net::HTTP::Post::Multipart.new uri.path,
         'api_key' => fetch(:honeybadger_sourcemaps_api_key),
         'minified_url' => minified_url_for(js_filename(s_map)),
-        'minified_file' => UploadIO.new(File.new(js_filename(s_map)), "application/octet-stream")
-        'source_map' => UploadIO.new(File.new(s_map), "application/octet-stream")
-        'revision' => fetch(:rollbar_sourcemaps_version),
+        'minified_file' => UploadIO.new(File.new(js_filename(s_map)), "application/octet-stream"),
+        'source_map' => UploadIO.new(File.new(s_map), "application/octet-stream"),
+        'revision' => fetch(:rollbar_sourcemaps_version)
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
