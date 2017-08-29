@@ -27,7 +27,7 @@ namespace :honeybadger do
 
     def js_filename(s_map)
       gsub_pattern = fetch(:rollbar_sourcemaps_gsub_pattern)
-      s_map.gsub(gsub_pattern, ''))
+      s_map.gsub(gsub_pattern, '')
     end
 
     def minified_url_for(s_map)
