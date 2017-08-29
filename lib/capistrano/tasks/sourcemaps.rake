@@ -11,7 +11,7 @@ namespace :honeybadger do
         'minified_url' => minified_url_for(js_filename(s_map)),
         'minified_file' => UploadIO.new(File.new(js_filename(s_map)), "application/octet-stream"),
         'source_map' => UploadIO.new(File.new(s_map), "application/octet-stream"),
-        'revision' => fetch(:rollbar_sourcemaps_version)
+        'revision' => fetch(:honeybadger_sourcemaps_version)
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -26,12 +26,12 @@ namespace :honeybadger do
     end
 
     def js_filename(s_map)
-      gsub_pattern = fetch(:rollbar_sourcemaps_gsub_pattern)
+      gsub_pattern = fetch(:honeybadger_sourcemaps_gsub_pattern)
       s_map.gsub(gsub_pattern, '')
     end
 
     def minified_url_for(s_map)
-      url_base = fetch(:rollbar_sourcemaps_minified_url_base).dup
+      url_base = fetch(:honeybadger_sourcemaps_minified_url_base).dup
       url_base = url_base.prepend('http://') unless url_base.index(/https?:\/\//)
 
       url = File.join(url_base, js_filename(s_map))
@@ -39,12 +39,12 @@ namespace :honeybadger do
       url
     end
 
-    desc 'Upload sourcemaps to Rollbar'
+    desc 'Upload sourcemaps to honeybadger'
     task :upload do
-      on roles fetch(:rollbar_sourcemaps_role) do
-        debug "Uploading source maps from #{fetch(:rollbar_sourcemaps_target_dir)}"
-        Dir.chdir fetch(:rollbar_sourcemaps_target_dir) do
-          Dir.glob(fetch(:rollbar_sourcemaps_glob_pattern)).each do |s_map|
+      on roles fetch(:honeybadger_sourcemaps_role) do
+        debug "Uploading source maps from #{fetch(:honeybadger_sourcemaps_target_dir)}"
+        Dir.chdir fetch(:honeybadger_sourcemaps_target_dir) do
+          Dir.glob(fetch(:honeybadger_sourcemaps_glob_pattern)).each do |s_map|
             upload_sourcemap(s_map)
           end
         end
