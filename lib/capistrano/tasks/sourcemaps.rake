@@ -34,7 +34,7 @@ namespace :honeybadger do
       url_base = fetch(:honeybadger_sourcemaps_minified_url_base).dup
       url_base = url_base.prepend('http://') unless url_base.index(/https?:\/\//)
 
-      url = File.join(url_base, js_filename(s_map))
+      url = "#{File.join(url_base, js_filename(s_map))}*"
       debug "Minified url for #{s_map}: #{url}"
       url
     end
