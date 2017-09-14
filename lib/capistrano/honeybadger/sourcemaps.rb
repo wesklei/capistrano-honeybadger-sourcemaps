@@ -1,7 +1,7 @@
 load File.expand_path('../../tasks/sourcemaps.rake', __FILE__)
 
 namespace :deploy do
-  after :set_current_revision, 'honeybadger:sourcemaps:upload'
+  after 'deploy:published', 'honeybadger:sourcemaps:upload'
 end
 
 namespace :load do
