@@ -3,7 +3,7 @@ require 'net/http/post/multipart'
 namespace :honeybadger do
   namespace :sourcemaps do
     def upload_sourcemap(s_map)
-      debug "Uploading sourcemap #{s_map}"
+      puts "Uploading sourcemap #{s_map}"
 
       uri = URI.parse('https://api.honeybadger.io/v1/source_maps')
       req = Net::HTTP::Post::Multipart.new uri.path,
@@ -35,14 +35,14 @@ namespace :honeybadger do
       url_base = url_base.prepend('http://') unless url_base.index(/https?:\/\//)
 
       url = File.join(url_base, js_filename(s_map))
-      debug "Minified url for #{s_map}: #{url}"
+      puts "Minified url for #{s_map}: #{url}"
       url
     end
 
     desc 'Upload sourcemaps to honeybadger'
     task :upload do
       on roles fetch(:honeybadger_sourcemaps_role) do
-        debug "Uploading source maps from #{fetch(:honeybadger_sourcemaps_target_dir)}"
+        puts "Uploading source maps from #{fetch(:honeybadger_sourcemaps_target_dir)} and Revision #{fetch(:honeybadger_sourcemaps_version)}"
         Dir.chdir fetch(:honeybadger_sourcemaps_target_dir) do
           Dir.glob(fetch(:honeybadger_sourcemaps_glob_pattern)).each do |s_map|
             upload_sourcemap(s_map)
